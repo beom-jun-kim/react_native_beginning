@@ -16,6 +16,12 @@ const API_KEY = "3cdb98a57730faca4e368816041c8e44";
 
 const icons = {
   Clouds: "cloudy",
+  Clear: "day-sunny",
+  Atmosphere:"cloudy-gusts",
+  Snow:"snow",
+  Rain:"rains",
+  Drizzle:"rain",
+  Thunderstorm:"linghtning",
 };
 
 export default function App() {
@@ -69,9 +75,9 @@ export default function App() {
                 <Text style={styles.temp}>
                   {parseFloat(day.temp.day).toFixed(1)}
                 </Text>
-                <Fontisto name="cloudy" size={50} color="white" />
+                <Fontisto name={icons[day.weather[0].main]} size={50} color="white"/>
               </View>
-              <Text style={styles.description}>{day.weather[0].main}</Text>
+              <Text style={styles.description}>{day.weather[0].main}</  Text>
             </View>
           ))
         )}
