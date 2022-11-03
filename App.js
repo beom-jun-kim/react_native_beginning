@@ -10,10 +10,13 @@ import {
 } from "react-native";
 import { Fontisto } from "@expo/vector-icons";
 
+// 화면 크기를 유연하게
 const SEREEN_WIDTH = Dimensions.get("window").width;
 
+// 날씨 API 내 key
 const API_KEY = "3cdb98a57730faca4e368816041c8e44";
 
+// icons
 const icons = {
   Clouds: "cloudy",
   Clear: "day-sunny",
@@ -24,32 +27,56 @@ const icons = {
   Thunderstorm:"linghtning",
 };
 
+
 export default function App() {
+
+  // 로딩
   const [city, setCity] = useState("Loading..");
+
+  // 로드된 정보
   const [days, setDays] = useState([]);
+
+  // 위치 엑세스 동의여부 세팅
   const [ok, setOk] = useState(true);
+
   const getWeather = async () => {
+
+    // requestForegroundPermissionsAsync() : 위치 엑세스 동의 여부
+    // 거절시 false 반환
     const { granted } = await Location.requestForegroundPermissionsAsync();
     if (!granted) {
       setOk(false);
     }
+
+    //  사용자 위치(수치로 나타남), accuracy는 정확도(숫자가 높을수록 정확하다 최고단계는 6)
     const {
       coords: { latitude, longitude },
     } = await Location.getCurrentPositionAsync({ accuracy: 5 });
+
+    // 위치(수치)로 받은 사용자의 지역
     const location = await Location.reverseGeocodeAsync(
       { latitude, longitude },
       { useGoogleMaps: false }
     );
+
+    // location이라는 배열의 첫번째 오브젝트(순서)에 있는 city
     setCity(location[0].city);
+
+    // API를 불러와서 데이터정렬 후 로드
     const response = await fetch(
       `https://api.openweathermap.org/data/2.5/onecall?lat=${latitude}&lon=${longitude}&exclude=alerts&appid=${API_KEY}&units=metric`
     );
+
     const json = await response.json();
     setDays(json.daily);
+
   };
+
+  // 한번 로드된 정보는 다시 재실행 되시 않게
   useEffect(() => {
     getWeather();
   }, []);
+  
   return (
     <View style={styles.container}>
       <View style={styles.city}>
