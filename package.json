@@ -9,11 +9,11 @@
     "web": "expo start --web"
   },
   "dependencies": {
-    "expo": "~46.0.7",
-    "expo-location": "~14.3.0",
-    "expo-status-bar": "~1.4.0",
-    "react": "18.0.0",
-    "react-native": "0.69.4",
+    "expo": "^47.0.14",
+    "expo-location": "~15.0.1",
+    "expo-status-bar": "~1.4.2",
+    "react": "18.1.0",
+    "react-native": "0.70.8",
     "react-native-ionicons": "^4.6.5"
   },
   "devDependencies": {
